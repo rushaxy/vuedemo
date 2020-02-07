@@ -31,16 +31,33 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        options: vueLoaderConfig
-      },
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
-      },
+        ...(config.dev.useEslint ? [createLintingRule()] : []),
+      // {
+      //   test: /\.vue$/,
+      //   loader: 'vue-loader',
+      //   options: vueLoaderConfig
+      // },
+        {
+          test: /\.vue$/,
+          use: [
+            {
+              loader: 'vue-loader',
+              options: vueLoaderConfig
+            },
+            {
+              loader: 'iview-loader',
+              options: {
+                  prefix: false
+              }
+            }
+          ]
+          
+        },
+        {
+          test: /\.js$/,
+          loader: 'babel-loader',
+          include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
+       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
@@ -64,7 +81,21 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
-      }
+      },
+      // {
+      //   test:/\.css$/,
+      //   loader:'style-loader!css-loader!stylus-loader',
+      //   include:[resolve('src'),resolve('node_modules/iview/dist/styles/iview.css')]
+      // },
+      // {
+      //   test: /\.js$/,
+      //   loader: 'babel-loader',
+      //   include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
+      // },
+
+
+
+
     ]
   },
   node: {
