@@ -34,7 +34,7 @@ new Vue({
   
   // components: { App1 },
   // render:h => h(App1),
-  render:function(createElement){//entry
+  render:function(createElement){//entry  //这里是vue 实例中的render方法  ，替换当前渲染组件
           return createElement(App1)
         }
   // template: '<App1/>'   //vue外层  标签 可忽略
